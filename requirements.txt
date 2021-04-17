@@ -2,9 +2,6 @@ scikit-learn
 gensim
 multiprocessing
 nltk
-subprocess
-os
-time
 matplotlib
 tqdm
 re
