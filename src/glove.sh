@@ -1,7 +1,11 @@
 #!/bin/bash
 set -e
 
+echo "Before command: ${PWD}"
+
 cd /app/glove
+
+echo "After command: ${PWD}"
 
 make
 
@@ -21,7 +25,7 @@ BINARY=2
 NUM_THREADS=8
 X_MAX=10
 
-echo tokenizando corpus
+echo "tokenizando corpus"
 echo "$ $BUILDDIR/vocab_count -min-count $VOCAB_MIN_COUNT -verbose $VERBOSE < $CORPUS > $VOCAB_FILE"
 $BUILDDIR/vocab_count -min-count $VOCAB_MIN_COUNT -verbose $VERBOSE < $CORPUS > $VOCAB_FILE
 echo criando matriz de coocorrencia
