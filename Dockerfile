@@ -11,6 +11,5 @@ ADD main.py /
 RUN pip install -r requirements.txt
 
 RUN [ "python", "-c", "import nltk; nltk.download('all')" ]
-ENTRYPOINT python
 
 CMD [ "python", "./main.py" ]
