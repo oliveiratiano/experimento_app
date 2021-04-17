@@ -130,6 +130,7 @@ def treinar_glove(exp, tam_vec):
     coocurrence_shuf_file="../dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
     save_file="../dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
+    import pdb; pdb.set_trace()
     treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
     output, errors = treinar_glove.communicate()
