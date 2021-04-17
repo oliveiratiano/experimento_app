@@ -122,15 +122,15 @@ def treinar_fasttext(corpus, exp, tam_vec):
     return model
 
     
-def treinar_glove(exp, tam_vec):
+def treinar_glove(exp, tam_vec):    
     print("treinando modelo glove")
-    corpus="/app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
-    vocab_file="/app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
-    coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
-    coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
-    save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
+    corpus="../dados/experimento_"+str(exp)+"/base_treino_glv.txt"
+    vocab_file="../dados/experimento_"+str(exp)+"/glove_vocab.txt"
+    coocurrence_file="../dados/experimento_"+str(exp)+"/glv_concurrence.bin"
+    coocurrence_shuf_file="../dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
+    save_file="../dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
-    treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
+    treinar_glove = subprocess.Popen(["bash", "glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
     output, errors = treinar_glove.communicate()
     treinar_glove.wait()
@@ -139,7 +139,7 @@ def treinar_glove(exp, tam_vec):
     print(errors)
     print("treinamento concluído")
 
-    glove_file = '/app/dados/experimento_'+str(exp)+'/glv_jur.txt'
+    glove_file = '../dados/experimento_'+str(exp)+'/glv_jur.txt'
     tmp_file = get_tmpfile("test_word2vec.txt")
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
@@ -489,8 +489,7 @@ def extrair_corpus():
             except zipfile.error as e:
                 pass
 
-def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):    
-    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + ' ooooooooooooo')
+def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):
     rnd = random.randint(0,10000)
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
@@ -514,6 +513,7 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
         for tam_vec in op_tam_vec:
             # importando modelos de domínio geral
             #w2v_geral, ftt_geral, glv_geral = importar_modelos_nilc(tam_vec)
+            w2v_geral, ftt_geral, glv_geral = [], [], []
             for remover_stopwords_pt in op_stopwords:
                 for usar_ica in op_ica:
                     for usar_tesauro in op_tesauro:
