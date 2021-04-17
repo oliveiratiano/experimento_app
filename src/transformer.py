@@ -122,9 +122,8 @@ def treinar_fasttext(corpus, exp, tam_vec):
     return model
 
     
-def treinar_glove(exp, tam_vec):    
+def treinar_glove(exp, tam_vec):
     print("treinando modelo glove")
-    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + ' ooooooooooooo')
     corpus="/app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
     vocab_file="/app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
     coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
@@ -490,7 +489,8 @@ def extrair_corpus():
             except zipfile.error as e:
                 pass
 
-def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):
+def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):    
+    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + ' ooooooooooooo')
     rnd = random.randint(0,10000)
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
