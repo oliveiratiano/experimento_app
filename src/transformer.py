@@ -107,7 +107,7 @@ def treinar_word2vec(corpus, exp, tam_vec):
     print("treinando modelo word2vec")
     model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,                 
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count(), sample = 0.00001)
-    model.save("dados/experimento_" + str(exp) + "/w2v_jur.model")
+    model.save("/app/dados/experimento_" + str(exp) + "/w2v_jur.model")
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
@@ -118,7 +118,7 @@ def treinar_fasttext(corpus, exp, tam_vec):
     model.build_vocab(corpus_file=corpus)
     total_words = model.corpus_total_words
     model.train(corpus_file=corpus, total_words=total_words, epochs=5)
-    model.save("dados/experimento_" + str(exp) + "/ftt_jur.model")
+    model.save("/app/dados/experimento_" + str(exp) + "/ftt_jur.model")
     return model
 
     
@@ -130,7 +130,9 @@ def treinar_glove(exp, tam_vec):
     coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
     save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
-    import pdb; pdb.set_trace()
+
+    #import pdb; pdb.set_trace()
+    
     treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
     output, errors = treinar_glove.communicate()
@@ -140,7 +142,7 @@ def treinar_glove(exp, tam_vec):
     print(errors)
     print("treinamento concluído")
 
-    glove_file = '../dados/experimento_'+str(exp)+'/glv_jur.txt'
+    glove_file = '/app/dados/experimento_'+str(exp)+'/glv_jur.txt'
     tmp_file = get_tmpfile("test_word2vec.txt")
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
