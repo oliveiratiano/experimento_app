@@ -124,11 +124,11 @@ def treinar_fasttext(corpus, exp, tam_vec):
     
 def treinar_glove(exp, tam_vec):    
     print("treinando modelo glove")
-    corpus="../dados/experimento_"+str(exp)+"/base_treino_glv.txt"
-    vocab_file="../dados/experimento_"+str(exp)+"/glove_vocab.txt"
-    coocurrence_file="../dados/experimento_"+str(exp)+"/glv_concurrence.bin"
-    coocurrence_shuf_file="../dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
-    save_file="../dados/experimento_"+str(exp)+"/glv_jur"
+    corpus="/app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
+    vocab_file="/app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
+    coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
+    coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
+    save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
     import pdb; pdb.set_trace()
     treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
