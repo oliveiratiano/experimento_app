@@ -124,6 +124,7 @@ def treinar_fasttext(corpus, exp, tam_vec):
     
 def treinar_glove(exp, tam_vec):    
     print("treinando modelo glove")
+    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + 'ooooooooooooo')
     corpus="/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
     vocab_file="/dados/experimento_"+str(exp)+"/glove_vocab.txt"
     coocurrence_file="/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
