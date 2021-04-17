@@ -12,4 +12,4 @@ RUN python -m nltk.downloader -d /usr/share/nltk_data all
 
 ADD main.py /
 
-CMD [ "sudo python", "./main.py" ]
+CMD [ "python", "./main.py" ]
