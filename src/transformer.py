@@ -132,14 +132,16 @@ def treinar_glove(exp, tam_vec):
     vector_size=tam_vec
 
     #import pdb; pdb.set_trace()
-    
-    treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
-                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+    st = os.stat('/app/glove/glove.sh')
+    os.chmod('/app/glove/glove.sh', st.st_mode | stat.S_IEXEC)
+    cmd = ["./glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, vector_size]
+    treinar_glove = subprocess.Popen(cmd,  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd='glove')
     output, errors = treinar_glove.communicate()
     treinar_glove.wait()
-
-    print(output)
-    print(errors)
+    print('output:')
+    print(output.decode('utf-8'))
+    print('errors:')
+    print(errors.decode('utf-8'))
     print("treinamento concluído")
 
     glove_file = '/app/dados/experimento_'+str(exp)+'/glv_jur.txt'
