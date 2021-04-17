@@ -1,11 +1,7 @@
 #!/bin/bash
 set -e
 
-CWD="$(pwd)"
-echo "CURRDIR"
-echo $CWD
-
-cd glove
+cd /app/glove
 
 make
 
