@@ -106,16 +106,16 @@ def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usa
 def treinar_word2vec(corpus, exp, tam_vec):    
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     print("treinando modelo word2vec")
-    model = Word2Vec(LineSentence(corpus), vector_size=tam_vec, window=5,                 
-                 min_count=5, sg=1, hs=1, workers=multiprocessing.cpu_count(), sample = 0.00001)
+    model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,                 
+                 min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count(), sample = 0.00001)
     model.save("/app/dados/experimento_" + str(exp) + "/w2v_jur.model")
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     print("treinando modelo fasttext")
-    model = FastText(vector_size=tam_vec, window=5,                 
-                 min_count=5, sg=1, hs=1, workers=multiprocessing.cpu_count())
+    model = FastText(size=tam_vec, window=5,                 
+                 min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count())
     model.build_vocab(corpus_file=corpus)
     total_words = model.corpus_total_words
     model.train(corpus_file=corpus, total_words=total_words, epochs=5)
