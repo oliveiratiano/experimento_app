@@ -6,6 +6,4 @@ tqdm
 numpy
 pandas
 seaborn
-requests
-random
 zipfile
