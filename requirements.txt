@@ -6,4 +6,3 @@ tqdm
 numpy
 pandas
 seaborn
-zipfile
