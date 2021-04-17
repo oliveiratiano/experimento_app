@@ -1,3 +1,5 @@
 
 src/__pycache__/analyzer.cpython-37.pyc
 *.pyc
+corpus_tratado.zip
+*.txt
