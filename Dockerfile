@@ -10,7 +10,7 @@ ADD main.py /
 # Install required Libraries & Modules
 RUN pip install -r requirements.txt
 
-# Download NLTK DATA
-RUN python -m nltk.downloader all
+RUN [ "python", "-c", "import nltk; nltk.download('all')" ]
+ENTRYPOINT python
 
 CMD [ "python", "./main.py" ]
