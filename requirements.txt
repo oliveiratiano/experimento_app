@@ -3,7 +3,6 @@ gensim
 nltk
 matplotlib
 tqdm
-re
 numpy
 pandas
 seaborn
