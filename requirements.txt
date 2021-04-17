@@ -1,6 +1,5 @@
 scikit-learn
 gensim
-multiprocessing
 nltk
 logging
 subprocess
