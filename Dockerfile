@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 # Download NLTK DATA
 RUN python -m nltk.downloader all
 
-CMD [ "python", "./my_script.py" ]
+CMD [ "python", "./main.py" ]
