@@ -124,14 +124,14 @@ def treinar_fasttext(corpus, exp, tam_vec):
     
 def treinar_glove(exp, tam_vec):    
     print("treinando modelo glove")
-    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + 'ooooooooooooo')
-    corpus="/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
-    vocab_file="/dados/experimento_"+str(exp)+"/glove_vocab.txt"
-    coocurrence_file="/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
-    coocurrence_shuf_file="/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
-    save_file="/dados/experimento_"+str(exp)+"/glv_jur"
+    print('oooooooooooooooo DIRETORIO: '+os.path.dirname(os.path.realpath(__file__)) + ' ooooooooooooo')
+    corpus="/app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
+    vocab_file="/app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
+    coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
+    coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
+    save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
-    treinar_glove = subprocess.Popen(["bash", "src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
+    treinar_glove = subprocess.Popen(["bash", "/app/src/glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)], 
                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
     output, errors = treinar_glove.communicate()
     treinar_glove.wait()
@@ -140,7 +140,7 @@ def treinar_glove(exp, tam_vec):
     print(errors)
     print("treinamento concluído")
 
-    glove_file = 'dados/experimento_'+str(exp)+'/glv_jur.txt'
+    glove_file = '/app/dados/experimento_'+str(exp)+'/glv_jur.txt'
     tmp_file = get_tmpfile("test_word2vec.txt")
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
