@@ -1,7 +1,9 @@
 # Use Python Official Image as Base
 FROM python:3
 
-WORKDIR ./
+WORKDIR /app
+
+COPY . .
 
 # Install required Libraries & Modules
 RUN pip install -r requirements.txt
