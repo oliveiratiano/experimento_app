@@ -29,6 +29,7 @@ import requests
 import random
 from tqdm import tqdm
 import zipfile
+import stat
 
 #recebe o id de um documento e o diretorio onde ele se encontra, como strings
 #retorna o texto contido neste documento
