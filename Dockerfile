@@ -8,7 +8,7 @@ COPY . .
 # Install required Libraries & Modules
 RUN pip install -r requirements.txt
 
-RUN sudo python -m nltk.downloader -d /usr/share/nltk_data all
+RUN python -m nltk.downloader -d /usr/share/nltk_data all
 
 ADD main.py /
 
