@@ -130,7 +130,7 @@ def treinar_glove(exp, tam_vec):
     coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
     coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
     save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
-    vector_size=tam_vec
+    vector_size=str(tam_vec)
 
     #import pdb; pdb.set_trace()
     st = os.stat('/app/glove/glove.sh')
