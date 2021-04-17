@@ -5,11 +5,11 @@ WORKDIR /app
 
 COPY . .
 
-ADD main.py /
-
 # Install required Libraries & Modules
 RUN pip install -r requirements.txt
 
-RUN [ "python", "-c", "import nltk; nltk.download('all')" ]
+RUN sudo python -m nltk.downloader -d /usr/share/nltk_data all
 
-CMD [ "python", "./main.py" ]
+ADD main.py /
+
+CMD [ "sudo python", "./main.py" ]
