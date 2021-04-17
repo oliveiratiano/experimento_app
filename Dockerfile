@@ -13,5 +13,3 @@ RUN python -m nltk.downloader stopwords
 ADD main.py /
 
 CMD [ "python", "./main.py" ]
-
-ENTRYPOINT /bin/sh
