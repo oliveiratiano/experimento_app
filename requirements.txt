@@ -1,0 +1,17 @@
+scikit-learn
+gensim
+multiprocessing
+nltk
+logging
+subprocess
+os
+time
+matplotlib
+tqdm
+re
+numpy
+pandas
+seaborn
+requests
+random
+zipfile
