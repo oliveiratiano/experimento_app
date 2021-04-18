@@ -315,7 +315,6 @@ def calc_matriz_sim(vetores, dir_experimento):
         for j in range(0, vetores.shape[0]):
             a, b = vetores[i], vetores[j].T
             sim_m[i][j] = np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
-    np.save('dados/'+dir_experimento+'/sim_docs_'+vetores.name+'.npy', sim_m)
     return(sim_m)
 
 def calcular_sim_assuntos(assuntos, sim_docs, modelo, dir_experimento):
