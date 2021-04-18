@@ -6,9 +6,9 @@ WORKDIR /app
 COPY . .
 
 # Install required Libraries & Modules
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN python -m nltk.downloader stopwords
+RUN python3 -m nltk.downloader stopwords
 
 ADD main.py /
 
