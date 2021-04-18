@@ -1,7 +1,10 @@
 from src import transformer
+import warnings
+warnings.filterwarnings("ignore")
 
 transformer.extrair_corpus()
 documentos_validos = transformer.ler_documentos_validos(quantidade=1000)
+
 
 lista_k = [2,3,4,5]
 grid_minfreqs = [0]

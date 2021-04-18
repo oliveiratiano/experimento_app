@@ -322,7 +322,7 @@ def calcular_sim_assuntos(assuntos, sim_docs, modelo, dir_experimento):
     print('calculando a similaridade entre assuntos para o modelo '+modelo)
     lista_sim_assuntos = []
     lista_assuntos = assuntos.unique()
-
+    
     for i in tqdm(range(0, lista_assuntos.shape[0])):
         for j in range(0, lista_assuntos.shape[0]):    
             assunto_a = lista_assuntos[i]
@@ -340,14 +340,15 @@ def calcular_sim_assuntos(assuntos, sim_docs, modelo, dir_experimento):
             else:
                 sim = sim_docs[np.ix_(indices_a,indices_b)].mean()
             lista_sim_assuntos.append((assunto_a, assunto_b, sim))
-            
+    if modelo == 'vec_w2v_jur_soma':
+        import pdb;pdb.set_trace()
     plt.rcParams["figure.figsize"] = (50,50)
     lista_sim_assuntos = pd.DataFrame.from_records(lista_sim_assuntos, columns = ['assunto_a', 'assunto_b', 'sim_cos'])
     pivot = lista_sim_assuntos.pivot(index='assunto_a', columns='assunto_b', values='sim_cos')
     fig = sns.heatmap(pivot).get_figure()
     fig.savefig('dados/'+dir_experimento+'/sim_assuntos_'+modelo+'.png', dpi=300)
+    pivot.to_csv('dados/'+dir_experimento+'/sim_assuntos_'+modelo+'.csv')
     plt.cla()
-    return(pivot)
 
 def computar_scores_agrupamento(X, y, dir_experimento, modelo, lista_k):
     lista_scores_k = []
@@ -568,6 +569,7 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
                                 lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
                                 gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
                                 np.save('dados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
+                                print('******   dados do modelo ' + modelo + 'salvos.')
                                 
                                 #####MATRIZES DE SIMILARIDADE##############
                                 print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
