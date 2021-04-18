@@ -340,13 +340,8 @@ def calcular_sim_assuntos(assuntos, sim_docs, modelo, dir_experimento):
             else:
                 sim = sim_docs[np.ix_(indices_a,indices_b)].mean()
             lista_sim_assuntos.append((assunto_a, assunto_b, sim))
-    if modelo == 'vec_w2v_jur_soma':
-        import pdb;pdb.set_trace()
-    plt.rcParams["figure.figsize"] = (50,50)
     lista_sim_assuntos = pd.DataFrame.from_records(lista_sim_assuntos, columns = ['assunto_a', 'assunto_b', 'sim_cos'])
     pivot = lista_sim_assuntos.pivot(index='assunto_a', columns='assunto_b', values='sim_cos')
-    fig = sns.heatmap(pivot).get_figure()
-    fig.savefig('dados/'+dir_experimento+'/sim_assuntos_'+modelo+'.png', dpi=300)
     pivot.to_csv('dados/'+dir_experimento+'/sim_assuntos_'+modelo+'.csv')
     plt.cla()
 
