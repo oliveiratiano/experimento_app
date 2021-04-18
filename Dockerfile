@@ -5,6 +5,10 @@ WORKDIR /app
 
 COPY . .
 
+RUN sudo apt update
+
+RUN sudo apt install python3-pip
+
 # Install required Libraries & Modules
 RUN pip3 install -r requirements.txt
 
