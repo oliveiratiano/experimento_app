@@ -557,26 +557,21 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
                             
                             for modelo in df.iloc[:,3:].columns:
                                 #####AGRUPAMENTOS###############
-                                try:
-                                    print('--------- Agrupando dados para o modelo '+ modelo + ' no experimento' +str(exp)+' ---------')
-                                    df[modelo] = df[modelo].apply(lambda x: converter_string_array(x))
-                                    X_kmeans = np.stack(df[modelo])
-                                    X_kmeans = X_kmeans.reshape(X_kmeans.shape[0], X_kmeans.shape[2])
-                                    y_kmeans = df['assunto']
-                                    le.fit(y_kmeans)
-                                    y_kmeans = le.transform(y_kmeans)
-                                    lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
-                                    gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-                                    np.save('dados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
-                                    
-                                    #####MATRIZES DE SIMILARIDADE##############
-                                    print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
-                                    sim_m = calc_matriz_sim(df[modelo], dir_experimento)
-                                    calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
-                                    print('============== FIM ANALYZER =============')
-                                    plt.close()
-                                except Exception as e:
-                                    print("Oops!", e.__class__, "occurred.")
-                                    print("Next entry.")
+                                print('--------- Agrupando dados para o modelo '+ modelo + ' no experimento' +str(exp)+' ---------')
+                                df[modelo] = df[modelo].apply(lambda x: converter_string_array(x))
+                                X_kmeans = np.stack(df[modelo])
+                                X_kmeans = X_kmeans.reshape(X_kmeans.shape[0], X_kmeans.shape[2])
+                                y_kmeans = df['assunto']
+                                le.fit(y_kmeans)
+                                y_kmeans = le.transform(y_kmeans)
+                                lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
+                                gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
+                                np.save('dados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
+                                
+                                #####MATRIZES DE SIMILARIDADE##############
+                                print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
+                                sim_m = calc_matriz_sim(df[modelo], dir_experimento)
+                                calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
+                                plt.close()
     print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
  
