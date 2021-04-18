@@ -1,5 +1,5 @@
 # Use Python Official Image as Base
-FROM python:3
+FROM ubuntu:latest
 
 WORKDIR /app
 
