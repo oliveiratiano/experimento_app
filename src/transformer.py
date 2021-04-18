@@ -554,6 +554,7 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
                             
                             df = pd.read_csv('dados/'+dir_experimento+'/vetores_teste.csv')
                             print('++++++ modelos ++++++ ' + df.iloc[:,3:].columns)
+                            import pdb; pdb.set_trace()
                             for modelo in df.iloc[:,3:].columns:
                                 #####AGRUPAMENTOS###############
                                 print('--------- Agrupando dados para o modelo '+ modelo + ' no experimento' +str(exp)+' ---------')
