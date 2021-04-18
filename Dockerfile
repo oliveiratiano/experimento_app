@@ -5,12 +5,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update
-
-RUN apt install gcc
-
-RUN apt install make
-
 # Install required Libraries & Modules
 RUN pip install -r requirements.txt
 
