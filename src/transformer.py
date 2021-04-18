@@ -573,6 +573,7 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
                                     print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
                                     sim_m = calc_matriz_sim(df[modelo], dir_experimento)
                                     calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
+                                    print('============== FIM ANALYZER =============')
                                     plt.close()
                                 except Exception as e:
                                     print("Oops!", e.__class__, "occurred.")
