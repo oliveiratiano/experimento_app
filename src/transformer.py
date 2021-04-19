@@ -30,6 +30,7 @@ import random
 from tqdm import tqdm
 import zipfile
 import stat
+import shutil
 
 #recebe o id de um documento e o diretorio onde ele se encontra, como strings
 #retorna o texto contido neste documento
@@ -162,7 +163,7 @@ def calc_vet_soma(serie_documentos, modelo, vocab):
     lista_vecs = []
     for documento in tqdm(serie_documentos):
         lista_tokens = documento.split(' ')
-        vetor_doc = np.zeros(100).reshape(1, -1)                                                    
+        vetor_doc = np.zeros(100).reshape(1, -1)
         for token in lista_tokens:
             if token in vocab:
                 try:
@@ -341,7 +342,7 @@ def calcular_sim_assuntos(assuntos, sim_docs, modelo, dir_experimento):
             lista_sim_assuntos.append((assunto_a, assunto_b, sim))
     lista_sim_assuntos = pd.DataFrame.from_records(lista_sim_assuntos, columns = ['assunto_a', 'assunto_b', 'sim_cos'])
     pivot = lista_sim_assuntos.pivot(index='assunto_a', columns='assunto_b', values='sim_cos')
-    pivot.to_csv('dados/'+dir_experimento+'/sim_assuntos_'+modelo+'.csv')
+    pivot.to_csv('resultados/'+dir_experimento+'/sim_assuntos_'+modelo+'.csv')
     plt.cla()
 
 def computar_scores_agrupamento(X, y, dir_experimento, modelo, lista_k):
@@ -489,8 +490,9 @@ def extrair_corpus():
                 zf.extract(member, 'dados/')
             except zipfile.error as e:
                 pass
+    os.remove(destination)
 
-def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):
+def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):
     rnd = random.randint(0,10000)
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
@@ -562,13 +564,13 @@ def transform_param(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesau
                                 y_kmeans = le.transform(y_kmeans)
                                 lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
                                 gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-                                np.save('dados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
-                                print('******   dados do modelo ' + modelo + 'salvos.')
+                                np.save('resultados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
+                                print('******   dados de agrupamento do modelo ' + modelo + 'salvos.')
                                 
                                 #####MATRIZES DE SIMILARIDADE##############
                                 print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
                                 sim_m = calc_matriz_sim(df[modelo], dir_experimento)
                                 calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
-                                plt.close()
+                                plt.close()    
     print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
  
