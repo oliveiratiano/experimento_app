@@ -542,7 +542,7 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                             ######DOC2VEC####
                             print('--------- Treinando doc2vec do experimento '+ str(exp)+' ---------')
                             dir_experimento = 'experimento_'+str(exp)
-                            os.mkdir('/app/resultados/'+dir_experimento)
+                            os.mkdir('resultados/'+dir_experimento)
                             corpus="dados/"+dir_experimento+"/base_treino_glv.txt"
                             model = Doc2Vec(corpus_file = corpus, vector_size=100, window=5, min_count=1, workers=8)
                             model.save("dados/"+dir_experimento+"/doc2vec_jur.model")
