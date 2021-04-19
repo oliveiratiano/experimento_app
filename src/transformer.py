@@ -99,7 +99,7 @@ def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usa
         print("extraindo termos do tesauro")
         termos_tesauro = sel_termos_tesauro()
     else:
-        termos_tesauro = set()    
+        termos_tesauro = set()
     vocabulario = termos_tesauro.union(termos_ica).union(termos_freq)
     print("***************extração de vocabulário concluída: " + str(len(vocabulario)) + ' palavras******************')
     return vocabulario
