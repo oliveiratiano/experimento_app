@@ -222,7 +222,7 @@ def importar_modelos_nilc(tam_vec):
         destination = 'glove_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 895000000)
-        print("Importando glv geral")
+        print("Importando glv geral (leva uns 3 minutos)")
         glv_geral = KeyedVectors.load_word2vec_format(destination)
         os.remove(destination)
     else:
@@ -231,7 +231,7 @@ def importar_modelos_nilc(tam_vec):
         destination = 'w2v_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 2800000000)
-        print("Importando w2v geral")
+        print("Importando w2v geral (leva uns 3 minutos)")
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
         os.remove(destination)
 
@@ -240,7 +240,7 @@ def importar_modelos_nilc(tam_vec):
         destination = 'ftt_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 2800000000)
-        print("Importando ftt geral")
+        print("Importando ftt geral (leva uns 3 minutos)")
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
         os.remove(destination)
 
@@ -259,8 +259,8 @@ def treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, 
     # treinando modelos de dominio juridico
     glv_jur = treinar_glove(exp, tam_vec)
     w2v_jur = treinar_word2vec('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
-    ftt_jur = treinar_fasttext('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)    
-
+    ftt_jur = treinar_fasttext('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
+    
     return(w2v_jur, ftt_jur, glv_jur)
 
 #recebe o número do experimento e os ids da base de treino
