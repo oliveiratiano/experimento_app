@@ -16,4 +16,5 @@ grid_tesauro = [True]
 grid_dimensoes = [100]
 transformer.rodar_experimento(documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k)
 os.remove('tesauro_stf.csv')
+shutil.rmtree('dados')
 
