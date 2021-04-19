@@ -573,5 +573,8 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                                 sim_m = calc_matriz_sim(df[modelo], dir_experimento)
                                 calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
                                 plt.close()
+    print('fazendo faxina nos dados do experimento...')                            
+    shutil.rmtree('dados/'+dir_experimento)
+    print('...faxina concluída.')
     print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
  
