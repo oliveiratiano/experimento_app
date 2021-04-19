@@ -542,6 +542,7 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                             ######DOC2VEC####
                             print('--------- Treinando doc2vec do experimento '+ str(exp)+' ---------')
                             dir_experimento = 'experimento_'+str(exp)
+                            os.mkdir('/app/resultados/'+dir_experimento)
                             corpus="dados/"+dir_experimento+"/base_treino_glv.txt"
                             model = Doc2Vec(corpus_file = corpus, vector_size=100, window=5, min_count=1, workers=8)
                             model.save("dados/"+dir_experimento+"/doc2vec_jur.model")
@@ -571,6 +572,6 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                                 print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
                                 sim_m = calc_matriz_sim(df[modelo], dir_experimento)
                                 calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
-                                plt.close()    
+                                plt.close()
     print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
  
