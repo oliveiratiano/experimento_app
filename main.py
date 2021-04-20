@@ -7,12 +7,7 @@ from src import transformer
 import random
 
 def main():
-    print(sys.argv[1])
-    print(sys.argv[2])
-    print(sys.argv[3])
-    print(sys.argv[4])
-    print(sys.argv[5])
-    """ erro = False
+    erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):
         try:
@@ -56,7 +51,7 @@ def main():
         print('fazendo faxina nos dados do experimento...')                            
         shutil.rmtree('dados/'+dir_experimento)
         print('...faxina concluída.')
-        print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------") """
+        print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
 
 if __name__ == "__main__":
     main()
