@@ -211,14 +211,17 @@ def importar_modelos_nilc(tam_vec):
     # importando modelos de domínio geral
     if tam_vec == 100:
         #w2v
+        print('Importando word2vec nilc. Leva 3 minutos.')
         destination = '/app/modelos/100/w2v_skip_nilc_100.txt'
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
 
         #ftt
+        print('Importando fasttext nilc. Leva 3 minutos.')
         destination = '/app/modelos/100/ftt_skip_nilc_100.txt'
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
 
         #glv
+        print('Importando glove nilc. Leva 3 minutos.')
         destination = '/app/modelos/300/glove_nilc_100.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
     else:
