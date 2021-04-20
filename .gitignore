@@ -3,6 +3,8 @@ src/__pycache__/analyzer.cpython-37.pyc
 *.pyc
 dados/
 modelos/
+dependencias.zip.tmp
+dependencias.zip
 
 corpus_tratado.zip
 dados/corpus_tratado/metadados.csv
