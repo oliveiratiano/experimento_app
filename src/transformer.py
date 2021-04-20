@@ -110,7 +110,7 @@ def treinar_word2vec(corpus, exp, tam_vec):
     print("treinando modelo word2vec")    
     model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count(), sample = 0.00001)
-    model.save("/app/dados/experimento_" + str(exp) + "/w2v_jur.model")
+    model.save("/home/ubuntu/experimento_app/dados/experimento_" + str(exp) + "/w2v_jur.model")
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
@@ -125,22 +125,22 @@ def treinar_fasttext(corpus, exp, tam_vec):
     total_words = model.corpus_total_words
     print('iniciando treinamento do modelo')
     model.train(corpus_file=corpus, total_words=total_words, epochs=5)
-    model.save("/app/dados/experimento_" + str(exp) + "/ftt_jur.model")
+    model.save("/home/ubuntu/experimento_app/dados/experimento_" + str(exp) + "/ftt_jur.model")
     return model
 
     
 def treinar_glove(exp, tam_vec):    
     print("treinando modelo glove")
-    corpus="/app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
-    vocab_file="/app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
-    coocurrence_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
-    coocurrence_shuf_file="/app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
-    save_file="/app/dados/experimento_"+str(exp)+"/glv_jur"
+    corpus="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
+    vocab_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
+    coocurrence_file="dados/experimento_"+str(exp)+"/glv_concurrence.bin"
+    coocurrence_shuf_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
+    save_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
 
     #import pdb; pdb.set_trace()
-    st = os.stat('/app/glove/glove.sh')
-    os.chmod('/app/glove/glove.sh', st.st_mode | stat.S_IEXEC)
+    st = os.stat('/home/ubuntu/experimento_app/glove/glove.sh')
+    os.chmod('/home/ubuntu/experimento_app/glove/glove.sh', st.st_mode | stat.S_IEXEC)
     cmd = ["./glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)]
     treinar_glove = subprocess.Popen(cmd,  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd='glove')
     output, errors = treinar_glove.communicate()
@@ -151,7 +151,7 @@ def treinar_glove(exp, tam_vec):
     print(errors.decode('utf-8'))
     print("treinamento concluído")
 
-    glove_file = '/app/dados/experimento_'+str(exp)+'/glv_jur.txt'
+    glove_file = '/home/ubuntu/experimento_app/dados/experimento_'+str(exp)+'/glv_jur.txt'
     tmp_file = get_tmpfile("test_word2vec.txt")
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
@@ -212,29 +212,29 @@ def importar_modelos_nilc(tam_vec):
     if tam_vec == 100:
         #w2v
         print('Importando word2vec nilc. Leva 3 minutos.')
-        destination = '/app/modelos/100/w2v_skip_nilc_100.txt'
+        destination = 'modelos/100/w2v_skip_nilc_100.txt'
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
 
         #ftt
         print('Importando fasttext nilc. Leva 3 minutos.')
-        destination = '/app/modelos/100/ftt_skip_nilc_100.txt'
+        destination = 'modelos/100/ftt_skip_nilc_100.txt'
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
 
         #glv
         print('Importando glove nilc. Leva 3 minutos.')
-        destination = '/app/modelos/100/glove_nilc_100.txt'
+        destination = 'modelos/100/glove_nilc_100.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
     else:
         #w2v
-        destination = '/app/modelos/300/w2v_skip_nilc_300.txt'
+        destination = 'modelos/300/w2v_skip_nilc_300.txt'
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
 
         #ftt
-        destination = '/app/modelos/300/ftt_skip_nilc_300.txt'
+        destination = 'modelos/300/ftt_skip_nilc_300.txt'
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
 
         #glv
-        destination = '/app/modelos/300/glove_nilc_300.txt'
+        destination = 'modelos/300/glove_nilc_300.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
 
     return(w2v_geral, ftt_geral, glv_geral)
