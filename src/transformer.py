@@ -459,7 +459,7 @@ def filtrar_documentos_curtos(min_palavras_documento, documentos_validos):
     documentos_validos = documentos_validos[documentos_validos['validos'] == 1].drop(['arquivo', 'teores', 'validos'], axis = 1).reset_index().drop('index', axis = 1)
     return documentos_validos
 
-def extrair_corpus():
+def baixar_corpus():
     file_id = '14UJLcDDZX5dIX6CJVCFkNHXZttTKfbC5'
     destination = 'corpus_tratado.zip'
     print('Baixando arquivo corpus. Por favor aguarde.')
@@ -468,6 +468,19 @@ def extrair_corpus():
         for member in tqdm(zf.infolist(), desc='Extraindo corpus: '):
             try:
                 zf.extract(member, 'dados/')
+            except zipfile.error:
+                pass
+    os.remove(destination)
+    
+def baixar_modelos():
+    file_id = '1KCi0Px9dLy5b5ZfaBI4dWty4lowoLQ2a'
+    destination = 'modelos.zip'
+    print('Baixando arquivo corpus. Por favor aguarde.')
+    download_file_from_google_drive(file_id, destination, 150000000)
+    with zipfile.ZipFile('corpus_tratado.zip') as zf:
+        for member in tqdm(zf.infolist(), desc='Extraindo corpus: '):
+            try:
+                zf.extract(member)
             except zipfile.error:
                 pass
     os.remove(destination)

@@ -1,5 +1,5 @@
 # Use Python Official Image as Base
-FROM ubuntu:latest
+FROM arm64v8/ubuntu:20.04
 
 WORKDIR /app
 
