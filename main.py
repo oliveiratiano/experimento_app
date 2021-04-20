@@ -7,7 +7,6 @@ from src import transformer
 import random
 
 def main():
-    import pdb; pdb.set_trace()
     erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):
@@ -32,7 +31,7 @@ def main():
         grid_stopwords = [True]
         grid_ica = [True]
         grid_tesauro = [True]
-        grid_dimensoes = [300]
+        grid_dimensoes = [100, 300]
 
 
         #execução do grid do experimento
