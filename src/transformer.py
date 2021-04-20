@@ -204,7 +204,7 @@ def importar_modelos_nilc(tam_vec):
     # importando modelos de domínio geral
     if tam_vec == 100:
         #w2v
-        file_id = '1UHqJiYMhe0V2PfpUIWBIHtNCp6CB2bKj'
+        file_id = '16uX5_kSpP3ZdIN34iwrpicmg4K2RGNw1'
         destination = 'w2v_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 895000000)
@@ -213,7 +213,7 @@ def importar_modelos_nilc(tam_vec):
         os.remove(destination)
 
         #ftt
-        file_id = '160wENCPPnZwOBm7gN95NXeCu4Uf2X-AN'
+        file_id = '1QbDuRbPsk6jcfmuRe_EAGSkG7MWNXmvm'
         destination = 'ftt_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 812000000)
@@ -222,7 +222,7 @@ def importar_modelos_nilc(tam_vec):
         os.remove(destination)
 
         #glv
-        file_id = '1SeI7dZ4ZBF0_W9d6ROnl5S_71_VjSDGT'
+        file_id = '1M5Lpu-QpEdmJOYf1E4E3WWOH06Qhbx3P'
         destination = 'glove_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 895000000)
@@ -231,7 +231,7 @@ def importar_modelos_nilc(tam_vec):
         os.remove(destination)
     else:
         #w2v
-        file_id = '10rXEAfSITfBxx4MlPcubnUGGbZNDumjI'
+        file_id = '1QT0fHq95VnQlcPDGH5cHAPxDPl9IFTgt'
         destination = 'w2v_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 2800000000)
@@ -240,7 +240,7 @@ def importar_modelos_nilc(tam_vec):
         os.remove(destination)
 
         #ftt
-        file_id = '17YlATNDj1wuI9_jZSEE4Z0jaLESpf5e6'
+        file_id = '1Iq5IwftvgLiP17F-2CPb9I2bp2gWtJeK'
         destination = 'ftt_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 2800000000)
@@ -249,7 +249,7 @@ def importar_modelos_nilc(tam_vec):
         os.remove(destination)
 
         #glv
-        file_id = '1qZJQuVGctPJ7DzatiyBTg0-nZvXsVicT'
+        file_id = '1LcpjrWyYOl3KzTmSf4Xkj6DSq-wacL09'
         destination = 'glove_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 2800000000)
@@ -433,10 +433,10 @@ def gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo):
     plt.close()  
 
 def download_file_from_google_drive(id, destination, file_size):
-    URL = 'https://docs.google.com/uc?export=download&id='+id
+    URL = 'https://docs.google.com/uc?export=download'
 
     session = requests.Session()
-    response = session.get(URL, stream = True)
+    response = session.get(URL, params = { 'id' : id }, stream = True)
 
     token = None
     for key, value in response.cookies.items():
