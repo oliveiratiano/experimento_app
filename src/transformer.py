@@ -238,6 +238,7 @@ def importar_modelos_nilc(tam_vec):
 
 def treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, exp, tam_vec):
     # treinando modelos de dominio juridico
+    import pdb; pdb.set_trace()
     glv_jur = treinar_glove(exp, tam_vec)
     w2v_jur = treinar_word2vec('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
     ftt_jur = treinar_fasttext('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
