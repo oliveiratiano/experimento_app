@@ -18,7 +18,7 @@ grid_tesauro = [True, False]
 grid_dimensoes = [100]
 try:
     transformer.rodar_experimento(documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k)
-except Exception e:
+except Exception as e:
     import pdb; pdb.set_trace()
     traceback.print_exc()
 
