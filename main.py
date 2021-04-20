@@ -15,7 +15,7 @@ def main():
 
     documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
     lista_k = np.arange(2,5)
-    grid_minfreqs = [0, 50]
+    grid_minfreqs = [0, 50, 100]
     grid_stopwords = [True]
     grid_ica = [True]
     grid_tesauro = [True]
