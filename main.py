@@ -1,4 +1,12 @@
-print("Hello World")
+import sys
+def main():
+    if sys.argv == '-d':
+        print('baixando dados')
+    else:
+        print('hello world')
+
+if __name__ == "__main__":
+    main()
 
 
 
