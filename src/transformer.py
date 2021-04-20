@@ -178,12 +178,24 @@ def calc_vet_soma(serie_documentos, modelo, vocab):
     return(lista_vecs)
 
 
-def criar_representacoes_soma(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, w2v_geral, ftt_geral, glv_geral, exp):
+def criar_representacoes_soma_jur(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, exp):
     base_teste = pd.DataFrame(X_teste)
     base_teste['id'] = base_teste.id + '.txt'
     print("recuperando teores da base de teste")
     base_teste['teores'] = [recuperar_teor(x, diretorio) for x in tqdm(base_teste.id)]
     base_teste['assunto'] = y_teste
+    docs_teste = base_teste.teores.reset_index().teores
+
+    print("criando representações word2vec juridico")
+    base_teste['vec_w2v_jur_soma'] = calc_vet_soma(docs_teste, w2v_jur, vocab)
+    print("criando representações fasttext juridico")
+    base_teste['vec_ftt_jur_soma'] = calc_vet_soma(docs_teste, ftt_jur, vocab)
+    print("criando representações glove juridico")
+    base_teste['vec_glv_jur_soma'] = calc_vet_soma(docs_teste, glv_jur, vocab)
+    base_teste.to_csv('dados/experimento_'+str(exp)+'/vetores_teste.csv', index=False)
+    return base_teste
+
+def criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, base_teste):
     docs_teste = base_teste.teores.reset_index().teores
 
     print("criando representações word2vec geral")
@@ -192,12 +204,6 @@ def criar_representacoes_soma(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_j
     base_teste['vec_ftt_ger_soma'] = calc_vet_soma(docs_teste, ftt_geral, vocab)
     print("criando representações glove geral")
     base_teste['vec_glv_ger_soma'] = calc_vet_soma(docs_teste, glv_geral, vocab)
-    print("criando representações word2vec juridico")
-    base_teste['vec_w2v_jur_soma'] = calc_vet_soma(docs_teste, w2v_jur, vocab)
-    print("criando representações fasttext juridico")
-    base_teste['vec_ftt_jur_soma'] = calc_vet_soma(docs_teste, ftt_jur, vocab)
-    print("criando representações glove juridico")
-    base_teste['vec_glv_jur_soma'] = calc_vet_soma(docs_teste, glv_jur, vocab)
     base_teste.to_csv('dados/experimento_'+str(exp)+'/vetores_teste.csv', index=False)
 
 def importar_modelos_nilc(tam_vec):
@@ -462,7 +468,7 @@ def extrair_corpus():
         for member in tqdm(zf.infolist(), desc='Extraindo corpus: '):
             try:
                 zf.extract(member, 'dados/')
-            except zipfile.error as e:
+            except zipfile.error:
                 pass
     os.remove(destination)
 
@@ -474,10 +480,6 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
     stopwords = nltk.corpus.stopwords.words('portuguese')
     diretorio = "dados/corpus_tratado/"
     le = LabelEncoder()
-
-    file_id = '1nyQS7VZMVTxx9sn9_cddsUJd01lTcOPj'
-    destination = 'tesauro_stf.csv'
-    download_file_from_google_drive(file_id, destination, 2030000)
     
     #index[0] são os indices de treino, e index[1] são os de teste
     #i é o código do experimento
@@ -489,7 +491,7 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
         #execução do grid do experimento
         for tam_vec in op_tam_vec:
             # importando modelos de domínio geral
-            w2v_geral, ftt_geral, glv_geral = importar_modelos_nilc(tam_vec)
+            #w2v_geral, ftt_geral, glv_geral = importar_modelos_nilc(tam_vec)
             #w2v_geral, ftt_geral, glv_geral = [],[],[]
             for remover_stopwords_pt in op_stopwords:
                 for usar_ica in op_ica:
@@ -509,7 +511,8 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                             # treinando modelos juridicos
                             w2v_jur, ftt_jur, glv_jur = treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, exp, tam_vec)
                             #criando representações através da soma de vetores
-                            criar_representacoes_soma(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, w2v_geral, ftt_geral, glv_geral, exp)
+                            bs = criar_representacoes_soma_jur(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, exp)
+                            #criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, bs)
                             end = time.time()
                             print('tempo do experimento: ' + str((end - start)/60) +' minutos')
 

@@ -12,6 +12,15 @@ def main():
     else:        
         documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
         documentos_validos.head() 
+        os.mkdir('resultados')
+
+    lista_k = np.arange(2,5)
+    grid_minfreqs = [50]
+    grid_stopwords = [True]
+    grid_ica = [True]
+    grid_tesauro = [True]
+    grid_dimensoes = [100]
+    transformer.rodar_experimento(documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k)
 
 if __name__ == "__main__":
     main()
