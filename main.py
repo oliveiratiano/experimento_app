@@ -3,7 +3,7 @@ def main():
     if sys.argv == '-d':
         print('baixando dados')
     else:
-        print('hello world')
+        print('hello fuckers')
 
 if __name__ == "__main__":
     main()
