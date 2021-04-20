@@ -433,10 +433,10 @@ def gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo):
     plt.close()  
 
 def download_file_from_google_drive(id, destination, file_size):
-    URL = 'https://docs.google.com/uc?export=download'
+    URL = 'https://docs.google.com/uc?export=download&id='+file_id
 
     session = requests.Session()
-    response = session.get(URL, params = { 'id' : id }, stream = True)
+    response = session.get(URL, stream = True)
 
     token = None
     for key, value in response.cookies.items():
