@@ -3,6 +3,7 @@ import warnings
 import os, shutil
 import numpy as np
 import traceback
+from src import transformer
 
 def main():
     if sys.argv == '-d':
