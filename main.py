@@ -37,7 +37,7 @@ def main():
         #execução do grid do experimento
         for tam_vec in grid_dimensoes:
             # importando modelos de domínio geral
-            w2v_geral, ftt_geral, glv_geral = importar_modelos_nilc(tam_vec)   
+            w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)   
             for remover_stopwords_pt in grid_stopwords:
                 for usar_ica in grid_ica:
                     for usar_tesauro in grid_tesauro:
