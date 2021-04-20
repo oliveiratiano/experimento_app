@@ -22,18 +22,6 @@ except Exception as e:
     import pdb; pdb.set_trace()
     traceback.print_exc()
 
-lista_k = np.arange(2,5)
-grid_minfreqs = [0]
-grid_stopwords = [True]
-grid_ica = [True]
-grid_tesauro = [True]
-grid_dimensoes = [100]
-try:
-    transformer.rodar_experimento(documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k)
-except Exception as e:
-    import pdb; pdb.set_trace()
-    traceback.print_exc()
-
 os.remove('tesauro_stf.csv')
 shutil.rmtree('dados')
 
