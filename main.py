@@ -1,9 +1,15 @@
 import sys
+import warnings
+import os, shutil
+import numpy as np
+import traceback
+
 def main():
     if sys.argv == '-d':
         print('baixando dados')
     else:
-        print('shsits crazeee')
+        transformer.extrair_corpus()
+        documentos_validos = transformer.ler_documentos_validos(quantidade = 1000)  
 
 if __name__ == "__main__":
     main()
