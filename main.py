@@ -52,8 +52,9 @@ def main():
                             dir_experimento = 'experimento_'+str(exp)
                             print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
 
-                            transformer.rodar_experimento(dir_experimento, documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k, rnd, exp)
-                            
+                            transformer.rodar_experimento(dir_experimento, documentos_validos, freq_min, remover_stopwords_pt, 
+                                                          usar_ica, usar_tesauro, tam_vec, lista_k, rnd, exp)
+
                             print('fazendo faxina nos dados do experimento...')                            
                             shutil.rmtree('dados/'+dir_experimento)
                             print('...faxina concluída.')
