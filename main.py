@@ -36,8 +36,8 @@ def main():
         tam_vec = int(sys.argv[5])
         #execução do grid do experimento
 
-        w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)
-
+        #w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)
+        w2v_geral, ftt_geral, glv_geral = [],[],[]
         exp = rnd
         opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
         opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
