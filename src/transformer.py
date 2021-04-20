@@ -105,7 +105,7 @@ def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usa
     return vocabulario
 
 def treinar_word2vec(corpus, exp, tam_vec):    
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.CRITICAL)
     print("treinando modelo word2vec")
     model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,                 
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count(), sample = 0.00001)
@@ -113,7 +113,7 @@ def treinar_word2vec(corpus, exp, tam_vec):
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.CRITICAL)
     print("treinando modelo fasttext")
     model = FastText(size=tam_vec, window=5,                 
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count())
@@ -204,7 +204,7 @@ def importar_modelos_nilc(tam_vec):
         destination = 'w2v_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 895000000)
-        print("Importando w2v geral")
+        print("Importando w2v geral (leva uns 3 minutos)")
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
         os.remove(destination)
 
@@ -213,7 +213,7 @@ def importar_modelos_nilc(tam_vec):
         destination = 'ftt_skip_nilc.txt'
         print('Baixando arquivo '+ destination + '. Por favor aguarde.')
         download_file_from_google_drive(file_id, destination, 812000000)
-        print("Importando ftt geral")
+        print("Importando ftt geral (leva uns 3 minutos)")
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
         os.remove(destination)
 
@@ -260,7 +260,7 @@ def treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, 
     glv_jur = treinar_glove(exp, tam_vec)
     w2v_jur = treinar_word2vec('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
     ftt_jur = treinar_fasttext('dados/experimento_'+str(exp)+'/base_treino.txt', exp, tam_vec)
-    
+
     return(w2v_jur, ftt_jur, glv_jur)
 
 #recebe o número do experimento e os ids da base de treino
@@ -526,7 +526,7 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                             opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
                             opc_stopwords = '__removeu_sw_pt' if remover_stopwords_pt  else '__manteve_sw_pt'
                             exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
-                            print("----------------------- EXPERIMENTO "+ str(exp) + " -----------------------")
+                            print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
 
                             # instanciando o corpus do conjunto de treinamento
                             base_treino = criar_base_treino(exp, X_treino, y_treino, diretorio, stopwords)
