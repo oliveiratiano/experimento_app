@@ -115,7 +115,6 @@ def treinar_word2vec(corpus, exp, tam_vec):
 def treinar_fasttext(corpus, exp, tam_vec):    
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
     print("treinando modelo fasttext")
-    import pdb; pdb.set_trace()
     model = FastText(size=tam_vec, window=5,                 
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count())
     model.build_vocab(corpus_file=corpus)
