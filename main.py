@@ -8,9 +8,10 @@ from src import transformer
 def main():
     if sys.argv == '-d':
         print('baixando dados')
-    else:
         transformer.extrair_corpus()
-        documentos_validos = transformer.ler_documentos_validos(quantidade = 1000)  
+    else:        
+        documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
+        documentos_validos.head() 
 
 if __name__ == "__main__":
     main()
