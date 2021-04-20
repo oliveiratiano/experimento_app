@@ -31,6 +31,7 @@ from tqdm import tqdm
 import zipfile
 import stat
 import shutil
+import gc
 
 #recebe o id de um documento e o diretorio onde ele se encontra, como strings
 #retorna o texto contido neste documento
@@ -563,6 +564,7 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                                 sim_m = calc_matriz_sim(df[modelo], dir_experimento)
                                 calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
                                 plt.close()
+                            gc.collect()
     print('fazendo faxina nos dados do experimento...')                            
     shutil.rmtree('dados/'+dir_experimento)
     print('...faxina concluída.')
