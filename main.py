@@ -15,11 +15,11 @@ def main():
 
     documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
     lista_k = np.arange(2,5)
-    grid_minfreqs = [0]
+    grid_minfreqs = [0, 50, 100]
     grid_stopwords = [True]
-    grid_ica = [True]
+    grid_ica = [True, False]
     grid_tesauro = [True, False]
-    grid_dimensoes = [100]
+    grid_dimensoes = [100, 300]
     transformer.rodar_experimento(documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k)
 
 if __name__ == "__main__":
