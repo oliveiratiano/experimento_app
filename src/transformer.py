@@ -222,7 +222,7 @@ def importar_modelos_nilc(tam_vec):
 
         #glv
         print('Importando glove nilc. Leva 3 minutos.')
-        destination = '/app/modelos/300/glove_nilc_100.txt'
+        destination = '/app/modelos/100/glove_nilc_100.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
     else:
         #w2v
