@@ -505,8 +505,7 @@ def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopword
     le = LabelEncoder()
     
     #index[0] são os indices de treino, e index[1] são os de teste
-    for index in sss.split(X, y):
-        start = time.time()
+    for index in sss.split(X, y):        
         X_treino, X_teste = X[index[0]], X[index[1]]
         y_treino, y_teste = y[index[0]], y[index[1]]       
         
@@ -518,9 +517,8 @@ def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopword
         w2v_jur, ftt_jur, glv_jur = treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, exp, op_tam_vec)
         #criando representações através da soma de vetores
         bs = criar_representacoes_soma_jur(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, exp, op_tam_vec)
-        #criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, op_tam_vec, bs)
-        end = time.time()
-        print('tempo do experimento: ' + str((end - start)/60) +' minutos')
+        criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, op_tam_vec, bs)
+        
 
         ######DOC2VEC####
         print('--------- Treinando doc2vec do experimento '+ str(exp)+' ---------')        
