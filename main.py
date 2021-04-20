@@ -13,11 +13,13 @@ def main():
             transformer.baixar_corpus()
         except:
             print('erro: o corpus deverá ser baixado manualmente no diretório dados/corpus_tratado')
+            erro = True
     if not os.path.exists('modelos'):
         try:
             transformer.baixar_modelos()
         except:
             print('erro: os modelos do nilc deverao ser baixados manualmente no diretório modelos/100 e modelos/300')
+            erro = True
     if not os.path.exists('resultados'):
         os.mkdir('resultados')
     if not erro:        
