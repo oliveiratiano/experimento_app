@@ -51,6 +51,7 @@ def main():
                             dir_experimento = 'experimento_'+str(exp)
                             print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
 
+                            import pdb; pdb.set_trace()
                             transformer.rodar_experimento(dir_experimento, documentos_validos, freq_min, remover_stopwords_pt, 
                                                           usar_ica, usar_tesauro, tam_vec, lista_k, rnd, exp)
 
