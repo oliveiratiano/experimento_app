@@ -28,9 +28,9 @@ def main():
         documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
         lista_k = np.arange(2,5)
         grid_minfreqs = [0]
-        grid_stopwords = [True]
-        grid_ica = [True]
-        grid_tesauro = [True]
+        grid_stopwords = [True, False]
+        grid_ica = [True, False]
+        grid_tesauro = [True, False]
         grid_dimensoes = [100, 300]
 
 
@@ -50,8 +50,7 @@ def main():
                             exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
                             dir_experimento = 'experimento_'+str(exp)
                             print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
-
-                            import pdb; pdb.set_trace()
+                         
                             transformer.rodar_experimento(dir_experimento, documentos_validos, freq_min, remover_stopwords_pt, 
                                                           usar_ica, usar_tesauro, tam_vec, lista_k, rnd, exp)
 
