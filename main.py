@@ -1,4 +1,9 @@
-from src import transformer
+print("Hello World")
+
+
+
+
+"""from src import transformer
 import warnings
 import os, shutil
 import numpy as np
@@ -23,5 +28,5 @@ except Exception as e:
     traceback.print_exc()
 
 os.remove('tesauro_stf.csv')
-shutil.rmtree('dados')
+shutil.rmtree('dados') """
 
