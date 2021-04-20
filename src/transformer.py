@@ -105,7 +105,7 @@ def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usa
     return vocabulario
 
 def treinar_word2vec(corpus, exp, tam_vec):
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
     print("treinando modelo word2vec")
     import pdb; pdb.set_trace()
     model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,
@@ -114,7 +114,7 @@ def treinar_word2vec(corpus, exp, tam_vec):
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.ERROR)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
     print("treinando modelo fasttext")
     model = FastText(size=tam_vec, window=5,                 
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count())
