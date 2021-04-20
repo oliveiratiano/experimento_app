@@ -7,7 +7,12 @@ from src import transformer
 import random
 
 def main():
-    erro = False
+    print(sys.argv[1])
+    print(sys.argv[2])
+    print(sys.argv[3])
+    print(sys.argv[4])
+    print(sys.argv[5])
+    """ erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):
         try:
@@ -27,37 +32,31 @@ def main():
         rnd = random.randint(0,10000)
         documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
         lista_k = np.arange(2,5)
-        grid_minfreqs = [0]
-        grid_stopwords = [True, False]
-        grid_ica = [True, False]
-        grid_tesauro = [True, False]
-        grid_dimensoes = [300]
-
-
+        freq_min = int(sys.argv[1])
+        remover_stopwords_pt = sys.argv[2] == '--true'
+        usar_ica = sys.argv[3] == '--true'
+        usar_tesauro = sys.argv[4] == '--true'
+        tam_vec = int(sys.argv[5])
         #execução do grid do experimento
-        for tam_vec in grid_dimensoes:
-            # importando modelos de domínio geral
-            w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)   
-            for remover_stopwords_pt in grid_stopwords:
-                for usar_ica in grid_ica:
-                    for usar_tesauro in grid_tesauro:
-                        for freq_min in grid_minfreqs:
-                            exp = rnd
-                            opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
-                            opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
-                            opc_stopwords = '__removeu_sw_pt' if remover_stopwords_pt  else '__manteve_sw_pt'
-                            exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
-                            dir_experimento = 'experimento_'+str(exp)
-                            print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
-                         
-                            transformer.rodar_experimento(dir_experimento, documentos_validos, freq_min, remover_stopwords_pt, 
-                                                          usar_ica, usar_tesauro, tam_vec, lista_k, rnd, exp, 
-                                                          w2v_geral, ftt_geral, glv_geral)
 
-                            print('fazendo faxina nos dados do experimento...')                            
-                            shutil.rmtree('dados/'+dir_experimento)
-                            print('...faxina concluída.')
-        print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
+        w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)
+
+        exp = rnd
+        opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
+        opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
+        opc_stopwords = '__removeu_sw_pt' if remover_stopwords_pt  else '__manteve_sw_pt'
+        exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
+        dir_experimento = 'experimento_'+str(exp)
+        print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
+        
+        transformer.rodar_experimento(dir_experimento, documentos_validos, freq_min, remover_stopwords_pt, 
+                                        usar_ica, usar_tesauro, tam_vec, lista_k, rnd, exp, 
+                                        w2v_geral, ftt_geral, glv_geral)
+
+        print('fazendo faxina nos dados do experimento...')                            
+        shutil.rmtree('dados/'+dir_experimento)
+        print('...faxina concluída.')
+        print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------") """
 
 if __name__ == "__main__":
     main()
