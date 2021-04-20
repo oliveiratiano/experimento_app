@@ -486,8 +486,7 @@ def baixar_modelos():
                 pass
     os.remove(destination)
 
-def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k):
-    rnd = random.randint(0,10000)
+def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k, rnd):
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
     y = documentos_validos.Assunto
@@ -496,77 +495,55 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
     le = LabelEncoder()
     
     #index[0] são os indices de treino, e index[1] são os de teste
-    #i é o código do experimento
-    for i, index in enumerate(sss.split(X, y)):
+    for index in sss.split(X, y):
         start = time.time()
         X_treino, X_teste = X[index[0]], X[index[1]]
-        y_treino, y_teste = y[index[0]], y[index[1]]
+        y_treino, y_teste = y[index[0]], y[index[1]]        
+        exp = rnd
+        # instanciando o corpus do conjunto de treinamento
+        base_treino = criar_base_treino(exp, X_treino, y_treino, diretorio, stopwords)
+        # criando vocabulário
+        vocab = extrair_vocabulario(base_treino, freq_min, stopwords, op_stopwords, op_ica, op_tesauro)
+        # treinando modelos juridicos
+        w2v_jur, ftt_jur, glv_jur = treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, exp, op_tam_vec)
+        #criando representações através da soma de vetores
+        bs = criar_representacoes_soma_jur(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, exp, op_tam_vec)
+        #criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, tam_vec, bs)
+        end = time.time()
+        print('tempo do experimento: ' + str((end - start)/60) +' minutos')
 
-        #execução do grid do experimento
-        for tam_vec in op_tam_vec:
-            # importando modelos de domínio geral
-            #w2v_geral, ftt_geral, glv_geral = importar_modelos_nilc(tam_vec)
-            #w2v_geral, ftt_geral, glv_geral = [],[],[]
-            for remover_stopwords_pt in op_stopwords:
-                for usar_ica in op_ica:
-                    for usar_tesauro in op_tesauro:
-                        for freq_min in minfreqs:
-                            exp = rnd
-                            opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
-                            opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
-                            opc_stopwords = '__removeu_sw_pt' if remover_stopwords_pt  else '__manteve_sw_pt'
-                            exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
-                            print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
-
-                            # instanciando o corpus do conjunto de treinamento
-                            base_treino = criar_base_treino(exp, X_treino, y_treino, diretorio, stopwords)
-                            # criando vocabulário
-                            vocab = extrair_vocabulario(base_treino, freq_min, stopwords, remover_stopwords_pt, usar_ica, usar_tesauro)
-                            # treinando modelos juridicos
-                            w2v_jur, ftt_jur, glv_jur = treinar_modelos_jur(X_treino, X_teste, y_treino, y_teste, vocab, diretorio, exp, tam_vec)
-                            #criando representações através da soma de vetores
-                            bs = criar_representacoes_soma_jur(X_teste, y_teste, vocab, diretorio, w2v_jur, ftt_jur, glv_jur, exp, tam_vec)
-                            #criar_representacoes_soma_ger(vocab, diretorio, w2v_geral, ftt_geral, glv_geral, exp, tam_vec, bs)
-                            end = time.time()
-                            print('tempo do experimento: ' + str((end - start)/60) +' minutos')
-
-                            ######DOC2VEC####
-                            print('--------- Treinando doc2vec do experimento '+ str(exp)+' ---------')
-                            dir_experimento = 'experimento_'+str(exp)
-                            os.mkdir('resultados/'+dir_experimento)
-                            corpus="dados/"+dir_experimento+"/base_treino_glv.txt"
-                            model = Doc2Vec(corpus_file = corpus, vector_size=100, window=5, min_count=1, workers=8)
-                            model.save("dados/"+dir_experimento+"/doc2vec_jur.model")
-                            print('--------- Inferindo vetores para docs de teste do experimento '+ str(exp)+' ---------')
-                            base_teste = pd.read_csv("dados/"+dir_experimento+"/vetores_teste.csv")
-                            base_teste['doc2vec_jur'] = [normalize(model.infer_vector(x[0].split(' ')).reshape(1,-1)) for x in base_teste.teores]
-                            base_teste.to_csv('dados/experimento_'+str(exp)+'/vetores_teste.csv', index=False)
-                            
-                            df = pd.read_csv('dados/'+dir_experimento+'/vetores_teste.csv')
-                            print('++++++ modelos ++++++ ' + df.iloc[:,3:].columns)
-                            
-                            for modelo in df.iloc[:,3:].columns:
-                                #####AGRUPAMENTOS###############
-                                print('--------- Agrupando dados para o modelo '+ modelo + ' no experimento' +str(exp)+' ---------')
-                                df[modelo] = df[modelo].apply(lambda x: converter_string_array(x))
-                                X_kmeans = np.stack(df[modelo])
-                                X_kmeans = X_kmeans.reshape(X_kmeans.shape[0], X_kmeans.shape[2])
-                                y_kmeans = df['assunto']
-                                le.fit(y_kmeans)
-                                y_kmeans = le.transform(y_kmeans)
-                                lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
-                                gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-                                np.save('resultados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
-                                print('******   dados de agrupamento do modelo ' + modelo + 'salvos.')
-                                
-                                #####MATRIZES DE SIMILARIDADE##############
-                                print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
-                                sim_m = calc_matriz_sim(df[modelo], dir_experimento)
-                                calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
-                                plt.close()
-                            gc.collect()
-    print('fazendo faxina nos dados do experimento...')                            
-    shutil.rmtree('dados/'+dir_experimento)
-    print('...faxina concluída.')
-    print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
+        ######DOC2VEC####
+        print('--------- Treinando doc2vec do experimento '+ str(exp)+' ---------')        
+        os.mkdir('resultados/'+dir_experimento)
+        corpus="dados/"+dir_experimento+"/base_treino_glv.txt"
+        model = Doc2Vec(corpus_file = corpus, vector_size=100, window=5, min_count=1, workers=8)
+        model.save("dados/"+dir_experimento+"/doc2vec_jur.model")
+        print('--------- Inferindo vetores para docs de teste do experimento '+ str(exp)+' ---------')
+        base_teste = pd.read_csv("dados/"+dir_experimento+"/vetores_teste.csv")
+        base_teste['doc2vec_jur'] = [normalize(model.infer_vector(x[0].split(' ')).reshape(1,-1)) for x in base_teste.teores]
+        base_teste.to_csv('dados/experimento_'+str(exp)+'/vetores_teste.csv', index=False)
+        
+        df = pd.read_csv('dados/'+dir_experimento+'/vetores_teste.csv')
+        print('++++++ modelos ++++++ ' + df.iloc[:,3:].columns)
+        
+        for modelo in df.iloc[:,3:].columns:
+            #####AGRUPAMENTOS###############
+            print('--------- Agrupando dados para o modelo '+ modelo + ' no experimento' +str(exp)+' ---------')
+            df[modelo] = df[modelo].apply(lambda x: converter_string_array(x))
+            X_kmeans = np.stack(df[modelo])
+            X_kmeans = X_kmeans.reshape(X_kmeans.shape[0], X_kmeans.shape[2])
+            y_kmeans = df['assunto']
+            le.fit(y_kmeans)
+            y_kmeans = le.transform(y_kmeans)
+            lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
+            gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
+            np.save('resultados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
+            print('******   dados de agrupamento do modelo ' + modelo + 'salvos.')
+            
+            #####MATRIZES DE SIMILARIDADE##############
+            print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
+            sim_m = calc_matriz_sim(df[modelo], dir_experimento)
+            calcular_sim_assuntos(df['assunto'], sim_m, df[modelo].name, dir_experimento)
+            plt.close()
+    
  
