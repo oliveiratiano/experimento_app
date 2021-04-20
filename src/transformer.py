@@ -204,58 +204,28 @@ def importar_modelos_nilc(tam_vec):
     # importando modelos de domínio geral
     if tam_vec == 100:
         #w2v
-        file_id = '16uX5_kSpP3ZdIN34iwrpicmg4K2RGNw1'
-        destination = 'w2v_skip_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 895000000)
-        print("Importando w2v geral (leva uns 3 minutos)")
+        destination = '/app/modelos/100/w2v_skip_nilc_100.txt'
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
 
         #ftt
-        file_id = '1QbDuRbPsk6jcfmuRe_EAGSkG7MWNXmvm'
-        destination = 'ftt_skip_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 812000000)
-        print("Importando ftt geral (leva uns 3 minutos)")
+        destination = '/app/modelos/100/ftt_skip_nilc_100.txt'
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
 
         #glv
-        file_id = '1M5Lpu-QpEdmJOYf1E4E3WWOH06Qhbx3P'
-        destination = 'glove_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 895000000)
-        print("Importando glv geral (leva uns 3 minutos)")
+        destination = '/app/modelos/300/glove_nilc_100.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
     else:
         #w2v
-        file_id = '1QT0fHq95VnQlcPDGH5cHAPxDPl9IFTgt'
-        destination = 'w2v_skip_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 2800000000)
-        print("Importando w2v geral (leva uns 3 minutos)")
+        destination = '/app/modelos/300/w2v_skip_nilc_300.txt'
         w2v_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
 
         #ftt
-        file_id = '1Iq5IwftvgLiP17F-2CPb9I2bp2gWtJeK'
-        destination = 'ftt_skip_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 2800000000)
-        print("Importando ftt geral (leva uns 3 minutos)")
+        destination = '/app/modelos/300/ftt_skip_nilc_300.txt'
         ftt_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
 
         #glv
-        file_id = '1LcpjrWyYOl3KzTmSf4Xkj6DSq-wacL09'
-        destination = 'glove_nilc.txt'
-        print('Baixando arquivo '+ destination + '. Por favor aguarde.')
-        download_file_from_google_drive(file_id, destination, 2800000000)
-        print("Importando glv geral")
+        destination = '/app/modelos/300/glove_nilc_300.txt'
         glv_geral = KeyedVectors.load_word2vec_format(destination)
-        os.remove(destination)
 
     return(w2v_geral, ftt_geral, glv_geral)
 
