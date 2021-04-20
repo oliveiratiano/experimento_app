@@ -16,6 +16,13 @@ def main():
             print('erro: o corpus deverá ser baixado manualmente no diretório dados/corpus_tratado')
             traceback.print_exc()
             erro = True
+    if not os.path.isfile('tesauro_stf.csv'):
+        try:
+            transformer.baixar_tesauro()
+        except:
+            print('erro: o tesauro deverá ser baixado manualmente no diretório experimento_app')
+            traceback.print_exc()
+            erro = True
     if not os.path.exists('modelos'):
         try:
             transformer.baixar_modelos()

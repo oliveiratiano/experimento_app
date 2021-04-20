@@ -475,6 +475,12 @@ def baixar_corpus():
             except zipfile.error:
                 pass
     os.remove(destination)
+
+def baixar_tesauro():
+    file_id = '1CAKVxcX9RxX5gSq3XzzGl7-JMCOPmBop'
+    destination = 'tesauro_stf.csv'
+    print('Baixando tesauro. Por favor aguarde.')
+    download_file_from_google_drive(file_id, destination, 150000000)
     
 def baixar_modelos():
     file_id = '1KCi0Px9dLy5b5ZfaBI4dWty4lowoLQ2a'
