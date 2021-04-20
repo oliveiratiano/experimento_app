@@ -486,7 +486,8 @@ def baixar_modelos():
                 pass
     os.remove(destination)
 
-def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k, rnd, exp):
+def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopwords, op_ica, op_tesauro, 
+                      op_tam_vec, lista_k, rnd, exp, w2v_geral, ftt_geral, glv_geral):
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
     y = documentos_validos.Assunto
