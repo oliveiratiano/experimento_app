@@ -6,6 +6,7 @@ import traceback
 from src import transformer
 
 def main():
+    import pdb; pdb.set_trace()
     erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):

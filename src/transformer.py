@@ -511,7 +511,6 @@ def rodar_experimento(documentos_validos, minfreqs, op_stopwords, op_ica, op_tes
                 for usar_ica in op_ica:
                     for usar_tesauro in op_tesauro:
                         for freq_min in minfreqs:
-                            import pdb; pdb.set_trace()
                             exp = rnd
                             opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
                             opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
