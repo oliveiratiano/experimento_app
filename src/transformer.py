@@ -486,7 +486,7 @@ def baixar_modelos():
                 pass
     os.remove(destination)
 
-def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k, rnd):
+def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopwords, op_ica, op_tesauro, op_tam_vec, lista_k, rnd, exp):
     sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=rnd)
     X = documentos_validos.id
     y = documentos_validos.Assunto
@@ -498,8 +498,8 @@ def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopword
     for index in sss.split(X, y):
         start = time.time()
         X_treino, X_teste = X[index[0]], X[index[1]]
-        y_treino, y_teste = y[index[0]], y[index[1]]        
-        exp = rnd
+        y_treino, y_teste = y[index[0]], y[index[1]]       
+        
         # instanciando o corpus do conjunto de treinamento
         base_treino = criar_base_treino(exp, X_treino, y_treino, diretorio, stopwords)
         # criando vocabulário

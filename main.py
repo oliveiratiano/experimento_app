@@ -44,13 +44,16 @@ def main():
                 for usar_ica in grid_ica:
                     for usar_tesauro in grid_tesauro:
                         for freq_min in grid_minfreqs:
+                            exp = rnd
                             opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
                             opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
                             opc_stopwords = '__removeu_sw_pt' if remover_stopwords_pt  else '__manteve_sw_pt'
                             exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__' + str(tam_vec) + '_dims__seed-' + str(exp)
                             dir_experimento = 'experimento_'+str(exp)
                             print("----------------------- INICIANDO EXPERIMENTO "+ str(exp) + " -----------------------")
-                            transformer.rodar_experimento(dir_experimento, documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k, rnd)
+
+                            transformer.rodar_experimento(dir_experimento, documentos_validos, grid_minfreqs, grid_stopwords, grid_ica, grid_tesauro, grid_dimensoes, lista_k, rnd, exp)
+                            
                             print('fazendo faxina nos dados do experimento...')                            
                             shutil.rmtree('dados/'+dir_experimento)
                             print('...faxina concluída.')
