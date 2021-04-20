@@ -31,7 +31,7 @@ def main():
         grid_stopwords = [True, False]
         grid_ica = [True, False]
         grid_tesauro = [True, False]
-        grid_dimensoes = [100, 300]
+        grid_dimensoes = [300]
 
 
         #execução do grid do experimento
@@ -57,7 +57,7 @@ def main():
                             print('fazendo faxina nos dados do experimento...')                            
                             shutil.rmtree('dados/'+dir_experimento)
                             print('...faxina concluída.')
-                            print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
+        print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
 
 if __name__ == "__main__":
     main()
