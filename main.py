@@ -15,7 +15,7 @@ def main():
         os.mkdir('resultados')
 
     lista_k = np.arange(2,5)
-    grid_minfreqs = [50]
+    grid_minfreqs = [0, 50]
     grid_stopwords = [True]
     grid_ica = [True]
     grid_tesauro = [True]
