@@ -37,7 +37,7 @@ def main():
     if not erro: 
         rnd = random.randint(0,10000)
         documentos_validos = transformer.ler_documentos_validos() 
-        lista_k = np.arange(2,5)
+        lista_k = np.arange(2,201)
         freq_min = int(sys.argv[1])
         remover_stopwords_pt = sys.argv[2] == '--true'
         usar_ica = sys.argv[3] == '--true'
@@ -65,11 +65,10 @@ def main():
         print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
         end = time.time()
         print('tempo do experimento: ' + str((end - start)/60) +' minutos')
+
+
 if __name__ == "__main__":
     main()
-
-
-
 
 """from src import transformer
 import warnings
