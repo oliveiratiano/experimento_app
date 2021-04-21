@@ -6,9 +6,11 @@ import traceback
 from src import transformer
 import random
 import time
+import nltk  
+
 
 def main():
-    start = time.time()
+    nltk.download('stopwords')
     erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):
@@ -35,6 +37,7 @@ def main():
     if not os.path.exists('resultados'):
         os.mkdir('resultados')
     if not erro: 
+        start = time.time()
         rnd = random.randint(0,10000)
         documentos_validos = transformer.ler_documentos_validos() 
         lista_k = np.arange(2,201)
