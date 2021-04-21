@@ -490,8 +490,8 @@ def baixar_modelos():
     destination = 'modelos.zip'
     print('Baixando modelos nilc. Por favor aguarde.')
     download_file_from_google_drive(file_id, destination, 3499254981)
-    with zipfile.ZipFile('corpus_tratado.zip') as zf:
-        for member in tqdm(zf.infolist(), desc='Extraindo corpus: '):
+    with zipfile.ZipFile('modelos.zip') as zf:
+        for member in tqdm(zf.infolist(), desc='Extraindo modelos: '):
             try:
                 zf.extract(member)
             except zipfile.error:
