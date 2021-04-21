@@ -115,6 +115,7 @@ def treinar_word2vec(corpus, exp, tam_vec):
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
+    cwd = os.getcwd()
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     print("treinando modelo fasttext")
     model = FastText(size=tam_vec, window=5,                 
