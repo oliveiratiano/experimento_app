@@ -106,11 +106,12 @@ def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usa
     return vocabulario
 
 def treinar_word2vec(corpus, exp, tam_vec):
+    cwd = os.getcwd()
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     print("treinando modelo word2vec")    
     model = Word2Vec(LineSentence(corpus), size=tam_vec, window=5,
                  min_count=5, sg=1, hs=1, iter=10, workers=multiprocessing.cpu_count(), sample = 0.00001)
-    model.save("/home/ubuntu/experimento_app/dados/experimento_" + str(exp) + "/w2v_jur.model")
+    model.save(cwd+"/dados/experimento_" + str(exp) + "/w2v_jur.model")
     return model
 
 def treinar_fasttext(corpus, exp, tam_vec):    
@@ -125,22 +126,23 @@ def treinar_fasttext(corpus, exp, tam_vec):
     total_words = model.corpus_total_words
     print('iniciando treinamento do modelo')
     model.train(corpus_file=corpus, total_words=total_words, epochs=5)
-    model.save("/home/ubuntu/experimento_app/dados/experimento_" + str(exp) + "/ftt_jur.model")
+    model.save(cwd+"/dados/experimento_" + str(exp) + "/ftt_jur.model")
     return model
 
     
-def treinar_glove(exp, tam_vec):    
+def treinar_glove(exp, tam_vec):   
+    cwd = os.getcwd() 
     print("treinando modelo glove")
-    corpus="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
-    vocab_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glove_vocab.txt"
-    coocurrence_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
-    coocurrence_shuf_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
-    save_file="/home/ubuntu/experimento_app/dados/experimento_"+str(exp)+"/glv_jur"
+    corpus=cwd+"/dados/experimento_"+str(exp)+"/base_treino_glv.txt"
+    vocab_file=cwd+"/dados/experimento_"+str(exp)+"/glove_vocab.txt"
+    coocurrence_file=cwd+"/dados/experimento_"+str(exp)+"/glv_concurrence.bin"
+    coocurrence_shuf_file=cwd+"/dados/experimento_"+str(exp)+"/glv_concurrence_shuf.bin"
+    save_file=cwd+"/dados/experimento_"+str(exp)+"/glv_jur"
     vector_size=tam_vec
 
     #import pdb; pdb.set_trace()
-    st = os.stat('/home/ubuntu/experimento_app/glove/glove.sh')
-    os.chmod('/home/ubuntu/experimento_app/glove/glove.sh', st.st_mode | stat.S_IEXEC)
+    st = os.stat(cwd+'/glove/glove.sh')
+    os.chmod(cwd+'/glove/glove.sh', st.st_mode | stat.S_IEXEC)
     cmd = ["./glove.sh", corpus, vocab_file, coocurrence_file, coocurrence_shuf_file, save_file, str(vector_size)]
     treinar_glove = subprocess.Popen(cmd,  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd='glove')
     output, errors = treinar_glove.communicate()
@@ -151,7 +153,7 @@ def treinar_glove(exp, tam_vec):
     print(errors.decode('utf-8'))
     print("treinamento concluído")
 
-    glove_file = '/home/ubuntu/experimento_app/dados/experimento_'+str(exp)+'/glv_jur.txt'
+    glove_file = cwd+'/dados/experimento_'+str(exp)+'/glv_jur.txt'
     tmp_file = get_tmpfile("test_word2vec.txt")
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
