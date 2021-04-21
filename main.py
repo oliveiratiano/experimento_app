@@ -37,10 +37,12 @@ def main():
     if not os.path.exists('resultados'):
         os.mkdir('resultados')
     if not erro: 
-        start = time.time()
+        cwd = os.getcwd()
+        print(cwd)
+        """ start = time.time()
         rnd = random.randint(0,10000)
-        documentos_validos = transformer.ler_documentos_validos() 
-        lista_k = np.arange(2,201)
+        documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
+        lista_k = np.arange(2,5)
         freq_min = int(sys.argv[1])
         remover_stopwords_pt = sys.argv[2] == '--true'
         usar_ica = sys.argv[3] == '--true'
@@ -48,8 +50,8 @@ def main():
         tam_vec = int(sys.argv[5])
         #execução do grid do experimento
 
-        w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)
-        #w2v_geral, ftt_geral, glv_geral = [],[],[]
+        #w2v_geral, ftt_geral, glv_geral = transformer.importar_modelos_nilc(tam_vec)
+        w2v_geral, ftt_geral, glv_geral = [],[],[]
         exp = rnd
         opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
         opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
@@ -67,7 +69,7 @@ def main():
         print('...faxina concluída.')
         print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
         end = time.time()
-        print('tempo do experimento: ' + str((end - start)/60) +' minutos')
+        print('tempo do experimento: ' + str((end - start)/60) +' minutos') """
 
 
 if __name__ == "__main__":
