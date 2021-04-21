@@ -37,9 +37,7 @@ def main():
     if not os.path.exists('resultados'):
         os.mkdir('resultados')
     if not erro: 
-        cwd = os.getcwd()
-        print(cwd)
-        """ start = time.time()
+        start = time.time()
         rnd = random.randint(0,10000)
         documentos_validos = transformer.ler_documentos_validos(quantidade = 1000) 
         lista_k = np.arange(2,5)
@@ -69,7 +67,7 @@ def main():
         print('...faxina concluída.')
         print("----------- EXPERIMENTO COM SEED "+ str(rnd) + " CONCLUIDO -----------")
         end = time.time()
-        print('tempo do experimento: ' + str((end - start)/60) +' minutos') """
+        print('tempo do experimento: ' + str((end - start)/60) +' minutos')
 
 
 if __name__ == "__main__":
