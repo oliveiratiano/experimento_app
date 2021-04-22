@@ -547,8 +547,8 @@ def rodar_experimento(dir_experimento, documentos_validos, freq_min, op_stopword
             le.fit(y_kmeans)
             y_kmeans = le.transform(y_kmeans)
             lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, modelo, lista_k)
-            gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-            np.save('resultados/'+dir_experimento + '/lista_scores_k.npy', lista_scores_k)
+            #gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
+            np.save('resultados/'+dir_experimento + '/' + modelo + '_lista_scores_k.npy', lista_scores_k)
             print('******   dados de agrupamento do modelo ' + modelo + 'salvos.')
             
             #####MATRIZES DE SIMILARIDADE##############
