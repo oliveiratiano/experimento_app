@@ -88,6 +88,7 @@ def sel_termos_tesauro():
 #retorna um conjunto com o vocabulário
 def extrair_vocabulario(corpus, corte_freq, stopwords, remover_stopwords_pt, usar_ica, usar_tesauro):
     if usar_ica:
+        
         print("extraindo termos com base no ICA")
         termos_ica = sel_termos_ica(corpus)
     else:
